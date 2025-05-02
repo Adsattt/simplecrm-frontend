@@ -1,8 +1,22 @@
 import { Field, Input, Button, VStack, Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const CustomerForm = ({ onSubmit, initialData, loading }) => {
   const [form, setForm] = useState(initialData || {});
+
+  // Format tanggal saat initialData berubah
+  useEffect(() => {
+    if (initialData && initialData.tanggal_registrasi) {
+      // Mengubah format ISO string menjadi YYYY-MM-DD
+      const date = new Date(initialData.tanggal_registrasi);
+      const formattedDate = date.toISOString().split("T")[0];
+
+      setForm({
+        ...initialData,
+        tanggal_registrasi: formattedDate,
+      });
+    }
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +74,7 @@ const CustomerForm = ({ onSubmit, initialData, loading }) => {
           <Field.ErrorText />
         </Field.Root>
 
-        <Button type="submit" colorScheme="teal" mt={2} loading={loading}>
+        <Button type="submit" colorScheme="teal" mt={2} isLoading={loading}>
           Simpan
         </Button>
       </VStack>

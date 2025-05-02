@@ -1,23 +1,30 @@
-import { Heading, HStack, Table, IconButton, Toaster } from "@chakra-ui/react";
+import { Heading, HStack, Table, IconButton} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getAllCustomers, deleteCustomer } from "../api/customer";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-// import { toaser } from "../components/ui/toaser.jsx"
 
 const CustomerList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
+
   const fetchData = async () => {
     try {
       const res = await getAllCustomers();
-      //   console.log("ini data", res.data);
       setData(res.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    //   toast({
+    //     title: "Error",
+    //     description: "Gagal mengambil data pelanggan",
+    //     status: "error",
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -27,17 +34,40 @@ const CustomerList = () => {
   };
 
   const handleDelete = async (id) => {
-    // Implement delete functionality here
-    if(window.confirm("Apakah Anda yakin ingin menghapus pelanggan ini?")) {
+    if (window.confirm("Apakah Anda yakin ingin menghapus pelanggan ini?")) {
       try {
         await deleteCustomer(id);
         fetchData(); // Refresh data after deletion
-        Toaster.success("Pelanggan berhasil dihapus");
+        // toast({
+        //   title: "Berhasil",
+        //   description: "Pelanggan berhasil dihapus",
+        //   status: "success",
+        //   duration: 3000,
+        //   isClosable: true,
+        // });
       } catch (error) {
         console.error("Error deleting customer:", error);
-        Toaster.error("Gagal menghapus pelanggan");
+        // toast({
+        //   title: "Error",
+        //   description: "Gagal menghapus pelanggan",
+        //   status: "error",
+        //   duration: 3000,
+        //   isClosable: true,
+        // });
       }
     }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    return date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
   };
 
   return (
@@ -61,7 +91,7 @@ const CustomerList = () => {
               <Table.Cell>{item.nama}</Table.Cell>
               <Table.Cell>{item.email}</Table.Cell>
               <Table.Cell>{item.telepon}</Table.Cell>
-              <Table.Cell>{item.tanggal_registrasi}</Table.Cell>
+              <Table.Cell>{formatDate(item.tanggal_registrasi)}</Table.Cell>
               <Table.Cell>
                 <HStack spacing={2}>
                   <IconButton
