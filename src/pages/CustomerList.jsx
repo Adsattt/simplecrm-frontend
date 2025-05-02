@@ -62,6 +62,14 @@ const CustomerList = () => {
       year: "numeric",
     });
   };
+  
+  if (data.length === 0) {
+    return (
+      <Heading size="lg" mb={4}>
+        Tidak ada pelanggan
+      </Heading>
+    );
+  }
 
   return (
     <>
