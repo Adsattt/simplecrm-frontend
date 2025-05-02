@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/customers";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://simplecrm-backend-production.up.railway.app/api/customers"
+    : "http://localhost:5000/api/customers";
 
 export const getAllCustomers = () => axios.get(`${BASE_URL}`);
 export const getCustomerById = (id: number) => axios.get(`${BASE_URL}/${id}`);
