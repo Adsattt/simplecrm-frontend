@@ -26,8 +26,11 @@ npm run dev
 https://simplecrm-frontend.vercel.app/
 
 * List Customer
-  ![image](https://github.com/user-attachments/assets/47934b6e-0735-47f5-8b7e-ad55dd8e1fd4)
+![image](https://github.com/user-attachments/assets/1210c6e6-cf78-4ccf-9578-0464e964de3e)
 
 * Form Create
 ![image](https://github.com/user-attachments/assets/94d51467-20cb-4fdc-819c-2dbe3a154bf0)
+
+* Form Edit
+  ![image](https://github.com/user-attachments/assets/c898f018-afcd-4ebd-b42a-93e45a72a9c7)
 
