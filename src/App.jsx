@@ -5,11 +5,13 @@ import { Route, Routes } from "react-router-dom";
 import CustomerList from "./pages/CustomerList";
 import CustomerAdd from "./pages/CustomerAdd";
 import CustomerEdit from "./pages/CustomerEdit";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
     <>
       <NavBar />
+      <Toaster />
       <Container maxW="container.xl" p={4}>
         <Routes>
           <Route path="/" element={<CustomerList />} />

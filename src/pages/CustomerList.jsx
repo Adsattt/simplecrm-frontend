@@ -1,13 +1,13 @@
-import { Heading, HStack, Table, IconButton} from "@chakra-ui/react";
+import { Heading, HStack, Table, IconButton } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getAllCustomers, deleteCustomer } from "../api/customer";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { toaster } from "../components/ui/toaster";
 
 const CustomerList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-
 
   const fetchData = async () => {
     try {
@@ -15,13 +15,6 @@ const CustomerList = () => {
       setData(res.data);
     } catch (error) {
       console.error("Error fetching data:", error);
-    //   toast({
-    //     title: "Error",
-    //     description: "Gagal mengambil data pelanggan",
-    //     status: "error",
-    //     duration: 3000,
-    //     isClosable: true,
-    //   });
     }
   };
 
@@ -37,23 +30,23 @@ const CustomerList = () => {
     if (window.confirm("Apakah Anda yakin ingin menghapus pelanggan ini?")) {
       try {
         await deleteCustomer(id);
+        toaster.success({
+          title: "Berhasil",
+          description: "Pelanggan berhasil dihapus",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
         fetchData(); // Refresh data after deletion
-        // toast({
-        //   title: "Berhasil",
-        //   description: "Pelanggan berhasil dihapus",
-        //   status: "success",
-        //   duration: 3000,
-        //   isClosable: true,
-        // });
       } catch (error) {
         console.error("Error deleting customer:", error);
-        // toast({
-        //   title: "Error",
-        //   description: "Gagal menghapus pelanggan",
-        //   status: "error",
-        //   duration: 3000,
-        //   isClosable: true,
-        // });
+        toaster.error({
+          title: "Error",
+          description: "Gagal menghapus pelanggan",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       }
     }
   };
